@@ -44,7 +44,7 @@ class RTSD(Dataset):
         target['labels'] = torch.LongTensor(target['labels'])
 
         if self.with_spaces:
-            return self.read_img(f'{self.root_path}rtsd_test/{path}'), target
+            return self.read_img(f'{self.root_path}rtsd_all/{path}'), target
         else:
 
             return self.read_img(f'{self.root_path}rtsd/{path}'), target

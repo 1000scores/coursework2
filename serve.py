@@ -20,13 +20,22 @@ def run_model(image):
     output = intersect(output, threshold_approve=0.3, threshold_intersect=0.3)
     output = output[0]
     draw = ImageDraw.Draw(image)
-    labels = output['labels']
+    
+    to_sign_class = None
+    with open('data/index_to_sign_class.json', 'r') as f:
+        to_sign_class = json.load(f)
+
+    labels = []
+    for l in output['labels']:
+        labels.append(to_sign_class[str(l)])
+
     for box in output['boxes']:
         draw.rectangle([box[0], box[1], box[2], box[3]], outline='red', width=2)
+    
     print('Scores:')
     print(output['scores'])    
     print('Success!')
-    return (image, labels)
+    return (image, labels, output['boxes'])
 
     
 

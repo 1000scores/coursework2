@@ -91,6 +91,7 @@ class LitModel50(pl.LightningModule):
   def training_step(self, batch, batch_idx):
     images, targets = batch
     loss_dict = self.model(images, targets)
+    print(loss_dict)
     losses = sum(loss for loss in loss_dict.values())
     self.logger.experiment.log_metric('train/loss', losses)
     return losses

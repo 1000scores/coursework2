@@ -1,0 +1,11 @@
+numpy
+pandas
+requests
+matplotlib
+einops
+tqdm
+pytorch-lightning
+scikit-learn
+opencv-python
+neptune-client
+Pillow

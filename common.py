@@ -170,7 +170,7 @@ def get_distance(bboxes, max_dist=30, w_image = 1280, h_height=720):
   for bbox in bboxes:
     w_sign = bbox[2] - bbox[0]
     h_sign = bbox[3] - bbox[1]
-    ans.append(max_dist - max_dist * (w_sign/w_image))
+    ans.append(max_dist * (1 - (w_sign/w_image)))
   return ans
 
 def cnt_bboxes(test_loader):
@@ -240,14 +240,4 @@ def roc_auc(path, test_loader, ROOT, device='cuda'):
   
     return (auc(X, y), X, y)
 
-if __name__ == '__main__':
-    ROOT = ''
-    '''test_model(f'{ROOT}best_models/resnet50_SGD.pt',
-           RTSD(train=False,
-                root_path='data/',
-                with_spaces=True
-            ),
-           threshold_approve = 0.3,
-           threshold_intersect = 0.2,
-           device='cpu')'''
 

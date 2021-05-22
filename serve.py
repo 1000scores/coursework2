@@ -11,13 +11,12 @@ def read_img(path):
     transform = torchvision.transforms.ToTensor()
     return transform(Image.open(path).convert('RGB'))
 
-def run_model(image):
-    device = 'cpu'
-    model = torch.load('best_models/resnet50_SGD.pt', map_location=torch.device('cpu'))
+def run_model(image, device='cuda'):
+    model = torch.load('best_models/model50_epochs3.pt', map_location=torch.device(device))
     model.eval()
     transform = torchvision.transforms.ToTensor()
-    output = model([transform(image.convert('RGB'))])
-    output = intersect(output, threshold_approve=0.3, threshold_intersect=0.3)
+    output = model([transform(image.convert('RGB')).to(device)])
+    output = intersect(output, threshold_approve=0.7, threshold_intersect=0.3)
     output = output[0]
     draw = ImageDraw.Draw(image)
     
@@ -36,23 +35,4 @@ def run_model(image):
     print(output['scores'])    
     print('Success!')
     return (image, labels, output['boxes'])
-
-    
-
-if __name__ == '__main__':
-    true_labels = None
-    with open(f'data/labels.json', 'r') as f:
-        true_labels = json.load(f)
-
-    with open('data/test_with_spaces.txt', 'r') as f:
-        files = f.read().split("\n")
-        for ind in range(len(files)):
-            with Image.open(f'data/rtsd_test/{files[ind]}') as img:
-                image, labels = run_model(img)
-                print("Predicted:")
-                print(labels)
-                print("True:")
-                print(true_labels[files[ind]])
-                image.show()
-            break
 

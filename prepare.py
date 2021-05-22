@@ -73,5 +73,5 @@ def prepare(root):
               f.write(f'{X_test[ind]}')
 
 if __name__ == '__main__':
-  ROOT = '/content/drive/MyDrive/Colab Notebooks/coursework2'
+  ROOT = ''
   prepare(ROOT)

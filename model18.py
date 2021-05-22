@@ -68,8 +68,6 @@ class RTSD_DataModule(pl.LightningDataModule):
                                        num_workers=4,
                                        shuffle=True,
                                        pin_memory=True)
-
-
 class LitModel18(pl.LightningModule):
   def __init__(self, optimizer, learning_rate, optimizer_params, root):
     super().__init__()
@@ -97,12 +95,9 @@ class LitModel18(pl.LightningModule):
     self.batch_cnt = 0
     self.cur_epoch = 0
 
-
-
   def forward(self, x):
     return self.model(x)
 
-    
   def training_step(self, batch, batch_idx):
     images, targets = batch
     loss_dict = self.model(images, targets)
@@ -124,30 +119,7 @@ class LitModel18(pl.LightningModule):
     print("Saved model!")
     self.logger.experiment.log_artifact(f'{self.root}/models/model18_epoch{self.cur_epoch}.pt')
     self.cur_epoch += 1
-    
-
-  def validation_step(self, batch, batch_idx):
-    images, targets = batch
-    bboxes = self.model(images)
-    intersected_bboxes = intersect(bboxes)
-    self.recall += get_recall(intersected_bboxes, targets)
-    self.precision += get_precision(intersected_bboxes, targets)
-    self.batch_cnt += 1
   
-  def on_validation_epoch_end(self):
-    self.logger.experiment.log_metric('test/precision',
-                                      self.precision / self.batch_cnt)
-    
-    self.logger.experiment.log_metric('test/recall',
-                                      self.recall / self.batch_cnt)
-
-    f1 = (self.precision + self.recall) / (2 * self.precision * self.recall)
-    
-    self.logger.experiment.log_metric('test/f1',
-                                      f1)
-    self.precision = 0
-    self.recall = 0
-
   def configure_optimizers(self):
 
     self.optimizer = self.optimizer(self.parameters(), self.learning_rate,

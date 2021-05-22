@@ -7,7 +7,7 @@ import json
 import torchvision
 from PIL import Image, ImageDraw
 
-def test_kek(image, targets, path = f'best_models/resnet50_SGD.pt', threshold_approve=0.3, threshold_intersect=0.1, device="cpu"):
+def test_curmodel(image , targets, path = f'best_models/resnet50_SGD.pt', threshold_approve=0.3, threshold_intersect=0.1, device="cpu"):
     model = torch.load(path, map_location=device)
     model.eval()
     recall = 0
@@ -65,7 +65,7 @@ for path in paths:
     images.append(image)
     targets = []
     targets.append(target)
-    bboxes = test_kek(image, targets)
+    bboxes = test_curmodel(image, targets)
     image = Image.open(f'test_images/{path}')
     draw = ImageDraw.Draw(image)
     print('True:')

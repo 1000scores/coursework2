@@ -10,9 +10,9 @@ import base64
 import io
 import time
 
-def recognize_image_from_server():
+def recognize_image_from_server(url1, url2):
 
-    url1 = 'http://92.63.105.87:8080/neuron/getPhoto'
+    #url1 = 'http://92.63.105.87:8080/neuron/getPhoto'
     TOKEN = '123'
 
     headers1 = {'token': TOKEN}
@@ -38,7 +38,7 @@ def recognize_image_from_server():
         'token': TOKEN,
         'id': id,
     }
-    url2 = 'http://92.63.105.87:8080/neuron/sendPhotoInfo'
+    #url2 = 'http://92.63.105.87:8080/neuron/sendPhotoInfo'
 
     img.save('temp/tmp.jpg')
     
@@ -54,9 +54,13 @@ def recognize_image_from_server():
 
 if __name__ == '__main__':
     done = 0
+    url1 = input()
+    url2 = input()
+    
     while True:
         try: 
-            recognize_image_from_server()
+            
+            recognize_image_from_server(url1, url2)
             time.sleep(100)
             done += 1
             print(f'Done : {done}')

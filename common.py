@@ -217,9 +217,9 @@ def test_model(path, test_loader, threshold_approve, threshold_intersect, device
     precision = tp / (tp + fp)
     recall = tp / (tp + fn)
     f1 = (precision + recall) / (2 * precision * recall)
-    print(f'Precision: {precision}')
-    print(f'Recall: {recall}')
-    print(f'F1: {f1}')
+    #print(f'Precision: {precision}')
+    #print(f'Recall: {recall}')
+    #print(f'F1: {f1}')
 
     return (tp, fp, tn, fn)
 
